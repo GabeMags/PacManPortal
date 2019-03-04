@@ -40,13 +40,12 @@ class Button():
         self.hs_msg_image_rect = self.hs_msg_image.get_rect()
         self.hs_msg_image_rect.center = self.rect_hs.center
 
-    def draw_buttons(self):
-        # Draw two blank buttons and their messages (play and high scores)
+    def draw_play_button(self):
         self.screen.fill(self.button_color, self.rect_play)
-        self.screen.fill(self.button_color, self.rect_hs)
-
         self.screen.blit(self.play_msg_image, self.play_msg_image_rect)
+        
+    def draw_hs_button(self):
+        self.screen.fill(self.button_color, self.rect_hs)
         self.screen.blit(self.hs_msg_image, self.hs_msg_image_rect)
-
 
 

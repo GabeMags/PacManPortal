@@ -6,12 +6,13 @@ class StartScreen():
         self.ai_settings = ai_settings
         self.screen = screen
         self.screen_rect = screen.get_rect()
-        self.game_title = "Pac Man Portal"
+        self.game_title = "Pa   Man Portal"
         self.creator_name = "Gabriel Magallanes"
 
-        # Set the properties of the start screen, game title
+        # Set the properties of the start screen, game title, and creator credits
         self.title_width, self.title_height = 400, 100
-        self.title_font = pygame.font.SysFont('Impact', 84)
+        self.creator_width, self.creator_height = 100, 100
+        self.title_font = pygame.font.SysFont('Snap ITC', 84)
         self.start_screen_color = (0, 0, 0)
         self.text_color = (255, 255, 255)
 
@@ -21,10 +22,10 @@ class StartScreen():
         # Build the game title's rect object and center it at the top of the start screen
         self.title_rect = pygame.Rect(0, 0, self.title_width, self.title_height)
         self.title_rect.centerx = 600
-        self.title_rect.centery = 80
+        self.title_rect.centery = 100
 
         # Simple credit text
-        self.creator_credit_rect = pygame.Rect(0,0, 100, 100)
+        self.creator_credit_rect = pygame.Rect(0,0, self.creator_width, self.creator_height)
         self.creator_credit_rect.centerx = self.screen_rect.centerx
         self.creator_credit_rect.centery = 680
         
@@ -32,6 +33,8 @@ class StartScreen():
         self.prep_game_title()
         
     def prep_game_title(self):
+
+        # Title of the game
         self.title_image = self.title_font.render(self.game_title, True, self.text_color, None)
         self.title_image_rect = self.title_image.get_rect()
         self.title_image_rect.center = self.title_rect.center

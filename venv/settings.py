@@ -9,4 +9,5 @@ class Settings():
         self.screen_height = 700
         self.bg_color = (0,0,0)
         
+        self.pacman_speed_factor = 1
     
