@@ -39,6 +39,8 @@ class PacMan(pygame.sprite.Sprite):
     def update(self):
         # Update pacmans position based on the movement flag and if he has collided with a wall
         # Update pacmans center value, not the rect
+
+        if not self.collide_wall:
          if self.moving_right and self.rect.right < self.screen_rect.right:
              self.centerx += self.ai_settings.pacman_speed_factor
          if self.moving_left and self.rect.left > 0:
@@ -49,8 +51,8 @@ class PacMan(pygame.sprite.Sprite):
              self.centery += self.ai_settings.pacman_speed_factor
             
         # Update rect object from self.center
-         self.rect.centerx = self.centerx
-         self.rect.centery = self.centery
+        self.rect.centerx = self.centerx
+        self.rect.centery = self.centery
 
     def blitme(self):
         # Draw PacMan at his current location
