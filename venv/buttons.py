@@ -18,11 +18,11 @@ class Button():
         self.rect_hs = pygame.Rect(0,0, self.width, self.height)
 
         # Play button location
-        self.rect_play.centerx = 600
+        self.rect_play.centerx = self.screen_rect.centerx
         self.rect_play.centery = 545
 
         # High score button location
-        self.rect_hs.centerx = 600
+        self.rect_hs.centerx = self.screen_rect.centerx
         self.rect_hs.centery = 625
 
         # The button messages only need to be prepped once

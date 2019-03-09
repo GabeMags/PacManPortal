@@ -10,9 +10,9 @@ class StartScreen():
         self.creator_name = "Gabriel Magallanes"
 
         # Set the properties of the start screen, game title, and creator credits
-        self.title_width, self.title_height = 400, 100
+        self.title_width, self.title_height = 200, 100
         self.creator_width, self.creator_height = 100, 100
-        self.title_font = pygame.font.SysFont('Snap ITC', 84)
+        self.title_font = pygame.font.SysFont('Snap ITC', 47)
         self.start_screen_color = (0, 0, 0)
         self.text_color = (255, 255, 255)
 
@@ -21,8 +21,15 @@ class StartScreen():
 
         # Build the game title's rect object and center it at the top of the start screen
         self.title_rect = pygame.Rect(0, 0, self.title_width, self.title_height)
-        self.title_rect.centerx = 600
+        self.title_rect.centerx = self.screen_rect.centerx
         self.title_rect.centery = 100
+        
+        # Build the title pac man SPRITE
+        #Title "C" Pacman
+        self.title_pacman_image = pygame.image.load("images/pacmanR_2_70px.png")
+        self.title_pacman_image_rect = self.title_pacman_image.get_rect()
+        self.title_pacman_image_rect.centerx = 230
+        self.title_pacman_image_rect.centery = 105
 
         # Simple credit text
         self.creator_credit_rect = pygame.Rect(0,0, self.creator_width, self.creator_height)
@@ -48,3 +55,4 @@ class StartScreen():
         self.screen.fill(self.start_screen_color, self.screen_rect)
         self.screen.blit(self.title_image, self.title_image_rect)
         self.screen.blit(self.creator_credit_image, self.creator_credit_image_rect)
+        self.screen.blit(self.title_pacman_image, self.title_pacman_image_rect)

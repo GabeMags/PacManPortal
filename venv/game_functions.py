@@ -4,17 +4,20 @@ from buttons import Button
 from pacman import PacMan
 
 
-def update_screen(ai_settings, screen, play_button, hs_button, stats, start_screen, pacman):
+
+def update_screen(ai_settings, screen, play_button, hs_button, stats, start_screen, pacman, maze):
     """Update the images on the screen and flup to the new screen"""
     screen.fill(ai_settings.bg_color)
 
     pacman.blitme()
-
+    maze.blit()
+    
     # If the game hasn't started yet, run the start screen
     if not stats.game_active:
         start_screen.draw_start_screen()
         play_button.draw_play_button()
         hs_button.draw_hs_button()
+
 
     pygame.display.flip()
 
@@ -22,12 +25,28 @@ def check_keydown_events(event, ai_settings, screen, pacman):
     # Respond to keypresses
     if event.key == pygame.K_RIGHT:
         pacman.moving_right = True
+        pacman.moving_left = False
+        pacman.moving_down = False
+        pacman.moving_up = False
+
     elif event.key == pygame.K_LEFT:
         pacman.moving_left = True
+        pacman.moving_right = False
+        pacman.moving_down = False
+        pacman.moving_up = False
+
     elif event.key == pygame.K_UP:
         pacman.moving_up = True
+        pacman.moving_left = False
+        pacman.moving_down = False
+        pacman.moving_right = False
+
     elif event.key == pygame.K_DOWN:
         pacman.moving_down = True
+        pacman.moving_left = False
+        pacman.moving_right = False
+        pacman.moving_up = False
+
 
     elif event.key == pygame.K_q:
         sys.exit()
