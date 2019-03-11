@@ -15,6 +15,7 @@ def run_game():
     
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
+    
     # Create the maze
     maze = Maze(screen)
     
@@ -36,9 +37,9 @@ def run_game():
     # Start the main loop for the game
     while True:
         gf.check_events(ai_settings, screen, stats, play_button, hs_button, pacman)
-        
+        pacman.check_wall_collision()
         if stats.game_active:
-            pacman.check_wall_collision()
+
             pacman.update()
 
 

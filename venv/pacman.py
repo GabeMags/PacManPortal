@@ -1,5 +1,5 @@
 import pygame
-
+from pygame import Rect
 
 class PacMan(pygame.sprite.Sprite):
     
@@ -12,7 +12,7 @@ class PacMan(pygame.sprite.Sprite):
         
         # Load the PacMan image and get its rect
         self.pm_image = pygame.image.load('images/pacmanR_2.png')
-        self.rect = self.pm_image.get_rect()
+        self.rect = Rect(0, 0, 22, 22)
         self.screen_rect = screen.get_rect()
 
         # Start each new PacMan near the center of the map
@@ -28,32 +28,63 @@ class PacMan(pygame.sprite.Sprite):
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-        
-        # Collision flag
-        self.collide_wall = False
 
     def check_wall_collision(self):
         if pygame.sprite.spritecollideany(self, self.maze.maze_blocks):
-            self.collide_wall = True
+            if self.moving_right is True:
+                self.moving_right = False
+                self.centerx -= 3
+            if self.moving_left is True:
+                self.moving_left = False
+                self.centerx += 3
+            if self.moving_up is True:
+                self.moving_up = False
+                self.centery += 3
+            if self.moving_down is True:
+                self.moving_down = False
+                self.centery -= 3
+
 
     def update(self):
-        # Update pacmans position based on the movement flag and if he has collided with a wall
-        # Update pacmans center value, not the rect
+        # Update pac mans position based on the movement flags
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.centerx += self.ai_settings.pacman_speed_factor
+        if self.moving_left and self.rect.left > 0:
+            self.centerx -= self.ai_settings.pacman_speed_factor
+        if self.moving_up and self.rect.top > 0 :
+            self.centery -= self.ai_settings.pacman_speed_factor
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.centery += self.ai_settings.pacman_speed_factor
 
-        if not self.collide_wall:
-         if self.moving_right and self.rect.right < self.screen_rect.right:
-             self.centerx += self.ai_settings.pacman_speed_factor
-         if self.moving_left and self.rect.left > 0:
-             self.centerx -= self.ai_settings.pacman_speed_factor
-         if self.moving_up and self.rect.top > 0 :
-             self.centery -= self.ai_settings.pacman_speed_factor
-         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-             self.centery += self.ai_settings.pacman_speed_factor
-            
         # Update rect object from self.center
         self.rect.centerx = self.centerx
         self.rect.centery = self.centery
+        self.eat()
 
     def blitme(self):
         # Draw PacMan at his current location
         self.screen.blit(self.pm_image, self.rect)
+
+    def eat(self):
+        """Eat pellets from the maze and return the score accumulated"""
+        score = 0
+        fruit_count = 0
+        power = None
+        collision = pygame.sprite.spritecollideany(self, self.maze.pellets)
+        if collision:
+            collision.kill()#
+            score += 10
+
+        collision = pygame.sprite.spritecollideany(self, self.maze.fruits)
+        if collision:
+            collision.kill()
+            score += 20
+            fruit_count += 1
+
+        collision = pygame.sprite.spritecollideany(self, self.maze.power_pellets)
+        if collision:
+            collision.kill()
+            score += 20
+            power = True
+
+        return score, power, fruit_count

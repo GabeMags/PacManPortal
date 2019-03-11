@@ -1,6 +1,7 @@
 import pygame
 from block import Block
 from random import randrange
+from fruit import Fruit
 
 class Teleporter:
     """Manages teleportation between one block and another"""
@@ -26,7 +27,10 @@ class Maze:
         self.map_file = 'pacmanportalmaze.txt'
         self.screen = screen
         self.block_size = 11
+
         self.block_image = pygame.image.load("images/block_0_32px.png")
+        self.cherry_image = pygame.image.load("images/cherry_0.png")
+
         self.shield_image = pygame.Surface((self.block_size, self.block_size // 2))  # create a shield surface
         self.shield_image.fill(Maze.WHITE)
         self.pellet_image = pygame.Surface((self.block_size // 4, self.block_size // 4))  # create a pellet surface
@@ -55,7 +59,7 @@ class Maze:
 
     def build_maze(self):
         """Build the maze layout based on the maze map text file"""
-        # reset maze assets if they exist already
+        # Reset maze assets if they exist already
         if self.maze_blocks or self.pellets or self.fruits or self.power_pellets or self.shield_blocks:
             self.maze_blocks.empty()
             self.pellets.empty()
@@ -84,10 +88,11 @@ class Maze:
                                                y_start + (self.block_size // 3) + (y * self.block_size),
                                                self.block_size, self.block_size,
                                                self.pellet_image))
-                    #else:
-                    #    self.fruits.add(Fruit(x_start + (self.block_size // 4) + (x * self.block_size),
-                    #                          y_start + (self.block_size // 4) + (y * self.block_size),
-                    #                          self.block_size, self.block_size))
+                    else:
+                        self.fruits.add(Fruit(x_start + (self.block_size // 4) + (x * self.block_size),
+                                              y_start + (self.block_size // 4) + (y * self.block_size),
+                                              self.block_size, self.block_size,
+                                              self.cherry_image))
                 elif co == '@':
                     self.power_pellets.add(Block(x_start + (self.block_size // 3) + (x * self.block_size),
                                                  y_start + (self.block_size // 3) + (y * self.block_size),
@@ -122,5 +127,5 @@ class Maze:
         self.maze_blocks.draw(self.screen)
         self.pellets.draw(self.screen)
         self.power_pellets.draw(self.screen)
-        #self.fruits.draw(self.screen)
+        self.fruits.draw(self.screen)
         self.shield_blocks.draw(self.screen)
